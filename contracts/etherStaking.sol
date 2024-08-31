@@ -63,17 +63,18 @@ contract StakeEther {
     // address(this).call{value: uint128(_value)}("");
     // StakeInformation memory staker;
     stakers[msg.sender].amount += msg.value;
-    totalStaked += msg.value;
+    totalStaked += msg.value; 
 
-    // For now, when you stake multiple times, you will only extend your 
-    // day of withdrawl by the new amount of days you specify.
-    stakers[msg.sender].expirationTime += (_days * 1 days);
-
+    
     // uodate stateVariables.
     if (stakers[msg.sender].staked != true) {
+      stakers[msg.sender].expirationTime = block.timestamp;
       listOfAddresses.push(msg.sender);
       stakers[msg.sender].staked = true;
     }
+    // For now, when you stake multiple times, you will only extend your 
+    // day of withdrawl by the new amount of days you specify.
+    stakers[msg.sender].expirationTime += (_days * 1 days);
 
     emit DepositSuccessful(msg.value, msg.sender);
   }
@@ -156,4 +157,5 @@ contract StakeEther {
 
 /// What if a user stakes multiple times at different interval?
 /// Potential bug of using array of users to track and update each user.
-//TODO: Seperate when the ether is expired or not. When expiration time is reached, such funds should not yield rewards any more.
+//TODO: Seperate when the ether is expired or not. 
+//When expiration time is reached, such funds should not yield rewards any more.
