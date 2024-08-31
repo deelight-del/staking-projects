@@ -114,7 +114,7 @@ contract StakeEther {
 
     // uodate stateVariables; Change staked to not staked.
     if (stakers[msg.sender].staked == true) {
-      listOfAddresses.push(msg.sender);
+      // listOfAddresses.push(msg.sender);
       stakers[msg.sender].staked = false;
     }
 
